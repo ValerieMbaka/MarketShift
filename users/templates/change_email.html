@@ -1,0 +1,48 @@
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="new_email">New Email</label>
+        <input type="email" id="new_email" name="new_email" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="current_password">Current Password</label>
+        <input type="password" id="current_password" name="current_password" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Change Email</button>
+        <!-- Add this spinner to your form -->
+<div id="loading-spinner" class="d-none">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<!-- Show spinner when form is submitted -->
+<script>
+    const form = document.querySelector('form');
+    const spinner = document.getElementById('loading-spinner');
+
+    form.addEventListener('submit', function() {
+        spinner.classList.remove('d-none');  // Show the spinner
+    });
+</script>
+
+</form>
+
+<script>
+    const emailInput = document.getElementById('new_email');
+    const passwordInput = document.getElementById('current_password');
+
+    emailInput.addEventListener('input', function() {
+        const email = emailInput.value;
+        if (!validateEmail(email)) {
+            emailInput.setCustomValidity("Please enter a valid email address.");
+        } else {
+            emailInput.setCustomValidity("");
+        }
+    });
+
+    function validateEmail(email) {
+        const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return re.test(email);
+    }
+</script>

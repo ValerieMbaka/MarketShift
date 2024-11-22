@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-</head>
-<body>
+{% extends 'layout.html' %}
 
-</body>
-</html>
+{% block title %} Login {% endblock %}
+
+{% block body %}
+        <main class="login-form">
+                <div class="container">
+                        <div class="row d-flex align-items-center justify-content-center">
+                                <div class="col-md-6">
+                                        <form action="/login/" method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+
+                                                <h2 class="text-center">Login</h2>
+
+                                                <div class="mb-3">
+                                                        <input type="email" class="form-control" name="email" placeholder="Email" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                        <input type="checkbox" id="remember_me" name="remember_me">
+                                                        <label for="remember_me">Remember Me</label>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary me-5">Login</button>
+
+                                                <a href="/password-reset/" class="ms-5">Forgot password?</a>
+
+                                        </form>
+                                </div>
+                        </div>
+                </div>
+        </main>
+
+{% endblock %}

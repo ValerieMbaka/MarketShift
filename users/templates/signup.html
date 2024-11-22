@@ -1,49 +1,75 @@
 {% extends 'layout.html' %}
 
 {% load static %}
+{% block title %} Sign Up {% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-        <h2 class="text-center">Sign Up</h2>
-        <form action="/signup/" method="POST">
-            <!-- Name -->
-            <div class="mb-3">
-                <label for="name" class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <!-- Email/Phone -->
-            <div class="mb-3">
-                <label for="emailPhone" class="form-label">Email or Phone</label>
-                <input type="text" class="form-control" id="emailPhone" name="emailPhone" required>
-            </div>
-            <!-- Role -->
-            <div class="mb-3">
-                <label for="role" class="form-label">I am a:</label>
-                <select class="form-select" id="role" name="role" required>
-                    <option value="buyer">Buyer</option>
-                    <option value="seller">Seller</option>
-                </select>
-            </div>
-            <!-- Password -->
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <!-- OTP Confirmation -->
-            <div class="mb-3">
-                <label for="otp" class="form-label">Enter OTP</label>
-                <input type="text" class="form-control" id="otp" name="otp">
-                <button type="button" class="btn btn-primary mt-2">Send OTP</button>
-            </div>
-            <!-- Terms & Conditions -->
-            <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="terms" required>
-                <label for="terms" class="form-check-label">I agree to the terms and conditions</label>
-            </div>
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-success">Sign Up</button>
-        </form>
-    </div>
 
+        <main class="sign-up-form">
+                <!-- Feedback Messages -->
+                <div>
+                        {% if messages %}
+                                {% for message in messages %}
+                                        <div class="alert alert-{{ message.tags }}">
+                                                {{ message }}
+                                        </div>
+                                {% endfor %}
+                        {% endif %}
+                </div>
+                <div class="container">
+                        <div class="row d-flex align-items-center justify-content-center">
+                                <div class="col-md-6">
+
+                                        <form action="/signup/" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                                                {% csrf_token %}
+
+                                                <h2 class="text-center">Sign Up</h2>
+
+                                                <div class="mb-3">
+                                                        <input type="text" class="form-control" id="Full_name" name="full_name" placeholder="Full Name" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                        <label for="role" class="form-label">Choose role:</label>
+                                                        <select class="form-select" id="role" name="role" required>
+                                                                <option value="buyer">Buyer</option>
+                                                                <option value="seller">Seller</option>
+                                                        </select>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm password" required>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-success">Sign Up</button>
+
+                                        </form>
+
+                                </div>
+                        </div>
+                </div>
+        </main>
+
+        <script>
+                function validateForm() {
+                        const password = document.getElementById("password").value;
+                        const passwordConfirmation = document.getElementById("password_confirmation").value;
+
+                        if (password !== passwordConfirmation) {
+                                alert("Passwords do not match!");
+                                return false;
+                        }
+
+                        return true;
+                }
+        </script>
 
 {% endblock %}
